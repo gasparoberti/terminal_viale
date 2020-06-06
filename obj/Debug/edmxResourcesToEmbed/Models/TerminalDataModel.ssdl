@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TerminalDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Empresa">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="razon_social" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="cuit" Type="int" Nullable="false" />
+    <Property Name="estado" Type="bit" />
+    <Property Name="fecha_alta" Type="datetime" />
+    <Property Name="fecha_baja" Type="datetime" />
+    <Property Name="usuario_baja" Type="varchar" MaxLength="150" />
+    <Property Name="usuario_alta" Type="varchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Horario">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="salida" Type="datetime" Nullable="false" />
+    <Property Name="llegada" Type="datetime" Nullable="false" />
+    <Property Name="estado" Type="bit" />
+    <Property Name="fecha_alta" Type="datetime" />
+    <Property Name="fecha_baja" Type="datetime" />
+    <Property Name="usuario_baja" Type="varchar" MaxLength="150" />
+    <Property Name="usuario_alta" Type="varchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Localidad">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="estado" Type="bit" />
+    <Property Name="con_entrada" Type="bit" />
+    <Property Name="fecha_alta" Type="datetime" />
+    <Property Name="fecha_baja" Type="datetime" />
+    <Property Name="id_provincia" Type="int" Nullable="false" />
+    <Property Name="usuario_baja" Type="varchar" MaxLength="150" />
+    <Property Name="usuario_alta" Type="varchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Provincia">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="estado" Type="bit" />
+    <Property Name="fecha_alta" Type="datetime" />
+    <Property Name="fecha_baja" Type="datetime" />
+    <Property Name="usuario_baja" Type="varchar" MaxLength="150" />
+    <Property Name="usuario_alta" Type="varchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Recorrido">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="estado" Type="bit" />
+    <Property Name="fecha_alta" Type="datetime" />
+    <Property Name="fecha_baja" Type="datetime" />
+    <Property Name="id_localidad" Type="int" Nullable="false" />
+    <Property Name="id_empresa" Type="int" Nullable="false" />
+    <Property Name="id_horario" Type="int" Nullable="false" />
+    <Property Name="usuario_baja" Type="varchar" MaxLength="150" />
+    <Property Name="usuario_alta" Type="varchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Localidad__id_pr__44FF419A">
+    <End Role="Provincia" Type="Self.Provincia" Multiplicity="1" />
+    <End Role="Localidad" Type="Self.Localidad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Provincia">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Localidad">
+        <PropertyRef Name="id_provincia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Recorrido__id_em__52593CB8">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+    <End Role="Recorrido" Type="Self.Recorrido" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Recorrido">
+        <PropertyRef Name="id_empresa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Recorrido__id_ho__534D60F1">
+    <End Role="Horario" Type="Self.Horario" Multiplicity="1" />
+    <End Role="Recorrido" Type="Self.Recorrido" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Horario">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Recorrido">
+        <PropertyRef Name="id_horario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Recorrido__id_lo__5165187F">
+    <End Role="Localidad" Type="Self.Localidad" Multiplicity="1" />
+    <End Role="Recorrido" Type="Self.Recorrido" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Localidad">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Recorrido">
+        <PropertyRef Name="id_localidad" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TerminalDataModelStoreContainer">
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Horario" EntityType="Self.Horario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Localidad" EntityType="Self.Localidad" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Provincia" EntityType="Self.Provincia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Recorrido" EntityType="Self.Recorrido" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Localidad__id_pr__44FF419A" Association="Self.FK__Localidad__id_pr__44FF419A">
+      <End Role="Provincia" EntitySet="Provincia" />
+      <End Role="Localidad" EntitySet="Localidad" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Recorrido__id_em__52593CB8" Association="Self.FK__Recorrido__id_em__52593CB8">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Recorrido" EntitySet="Recorrido" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Recorrido__id_ho__534D60F1" Association="Self.FK__Recorrido__id_ho__534D60F1">
+      <End Role="Horario" EntitySet="Horario" />
+      <End Role="Recorrido" EntitySet="Recorrido" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Recorrido__id_lo__5165187F" Association="Self.FK__Recorrido__id_lo__5165187F">
+      <End Role="Localidad" EntitySet="Localidad" />
+      <End Role="Recorrido" EntitySet="Recorrido" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

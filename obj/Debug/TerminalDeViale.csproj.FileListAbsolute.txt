@@ -114,3 +114,4 @@ C:\Users\Usuario\source\repos\TerminalDeViale\obj\Debug\TerminalDeViale.csprojAs
 C:\Users\Usuario\source\repos\TerminalDeViale\obj\Debug\TerminalDeViale.csproj.CopyComplete
 C:\Users\Usuario\source\repos\TerminalDeViale\obj\Debug\TerminalDeViale.dll
 C:\Users\Usuario\source\repos\TerminalDeViale\obj\Debug\TerminalDeViale.pdb
+C:\Users\Usuario\source\repos\TerminalDeViale\obj\Debug\TerminalDeViale.csproj.CoreCompileInputs.cache

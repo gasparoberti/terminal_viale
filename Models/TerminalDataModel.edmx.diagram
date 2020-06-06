@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="20ae47e62e3c4dacb39d001a01718922" Name="Diagram1">
+        <EntityTypeShape EntityType="TerminalDataModel.AspNetUsers" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TerminalDataModel.Empresa" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TerminalDataModel.Horario" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TerminalDataModel.Localidad" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TerminalDataModel.Provincia" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TerminalDataModel.Recorrido" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="TerminalDataModel.FK__Recorrido__id_em__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="TerminalDataModel.FK__Recorrido__id_ho__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="TerminalDataModel.FK__Localidad__id_pr__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="TerminalDataModel.FK__Recorrido__id_lo__5165187F" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,449 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TerminalDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="razon_social" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="cuit" Type="int" Nullable="false" />
+          <Property Name="estado" Type="bit" />
+          <Property Name="fecha_alta" Type="datetime" />
+          <Property Name="fecha_baja" Type="datetime" />
+          <Property Name="usuario_baja" Type="varchar" MaxLength="150" />
+          <Property Name="usuario_alta" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Horario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="salida" Type="datetime" Nullable="false" />
+          <Property Name="llegada" Type="datetime" Nullable="false" />
+          <Property Name="estado" Type="bit" />
+          <Property Name="fecha_alta" Type="datetime" />
+          <Property Name="fecha_baja" Type="datetime" />
+          <Property Name="usuario_baja" Type="varchar" MaxLength="150" />
+          <Property Name="usuario_alta" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Localidad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="estado" Type="bit" />
+          <Property Name="con_entrada" Type="bit" />
+          <Property Name="fecha_alta" Type="datetime" />
+          <Property Name="fecha_baja" Type="datetime" />
+          <Property Name="id_provincia" Type="int" Nullable="false" />
+          <Property Name="usuario_baja" Type="varchar" MaxLength="150" />
+          <Property Name="usuario_alta" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Provincia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="estado" Type="bit" />
+          <Property Name="fecha_alta" Type="datetime" />
+          <Property Name="fecha_baja" Type="datetime" />
+          <Property Name="usuario_baja" Type="varchar" MaxLength="150" />
+          <Property Name="usuario_alta" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recorrido">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="estado" Type="bit" />
+          <Property Name="fecha_alta" Type="datetime" />
+          <Property Name="fecha_baja" Type="datetime" />
+          <Property Name="id_localidad" Type="int" Nullable="false" />
+          <Property Name="id_empresa" Type="int" Nullable="false" />
+          <Property Name="id_horario" Type="int" Nullable="false" />
+          <Property Name="usuario_baja" Type="varchar" MaxLength="150" />
+          <Property Name="usuario_alta" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Localidad__id_pr__44FF419A">
+          <End Role="Provincia" Type="Self.Provincia" Multiplicity="1" />
+          <End Role="Localidad" Type="Self.Localidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provincia">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Localidad">
+              <PropertyRef Name="id_provincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Recorrido__id_em__52593CB8">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Recorrido" Type="Self.Recorrido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Recorrido">
+              <PropertyRef Name="id_empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Recorrido__id_ho__534D60F1">
+          <End Role="Horario" Type="Self.Horario" Multiplicity="1" />
+          <End Role="Recorrido" Type="Self.Recorrido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Horario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Recorrido">
+              <PropertyRef Name="id_horario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Recorrido__id_lo__5165187F">
+          <End Role="Localidad" Type="Self.Localidad" Multiplicity="1" />
+          <End Role="Recorrido" Type="Self.Recorrido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Localidad">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Recorrido">
+              <PropertyRef Name="id_localidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TerminalDataModelStoreContainer">
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Horario" EntityType="Self.Horario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Localidad" EntityType="Self.Localidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Provincia" EntityType="Self.Provincia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recorrido" EntityType="Self.Recorrido" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Localidad__id_pr__44FF419A" Association="Self.FK__Localidad__id_pr__44FF419A">
+            <End Role="Provincia" EntitySet="Provincia" />
+            <End Role="Localidad" EntitySet="Localidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Recorrido__id_em__52593CB8" Association="Self.FK__Recorrido__id_em__52593CB8">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Recorrido" EntitySet="Recorrido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Recorrido__id_ho__534D60F1" Association="Self.FK__Recorrido__id_ho__534D60F1">
+            <End Role="Horario" EntitySet="Horario" />
+            <End Role="Recorrido" EntitySet="Recorrido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Recorrido__id_lo__5165187F" Association="Self.FK__Recorrido__id_lo__5165187F">
+            <End Role="Localidad" EntitySet="Localidad" />
+            <End Role="Recorrido" EntitySet="Recorrido" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TerminalDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="razon_social" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cuit" Type="Int32" Nullable="false" />
+          <Property Name="estado" Type="Boolean" />
+          <Property Name="fecha_alta" Type="DateTime" Precision="3" />
+          <Property Name="fecha_baja" Type="DateTime" Precision="3" />
+          <Property Name="usuario_baja" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_alta" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Recorrido" Relationship="Self.FK__Recorrido__id_em__52593CB8" FromRole="Empresa" ToRole="Recorrido" />
+        </EntityType>
+        <EntityType Name="Horario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="salida" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="llegada" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="estado" Type="Boolean" />
+          <Property Name="fecha_alta" Type="DateTime" Precision="3" />
+          <Property Name="fecha_baja" Type="DateTime" Precision="3" />
+          <Property Name="usuario_baja" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_alta" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Recorrido" Relationship="Self.FK__Recorrido__id_ho__534D60F1" FromRole="Horario" ToRole="Recorrido" />
+        </EntityType>
+        <EntityType Name="Localidad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="estado" Type="Boolean" />
+          <Property Name="con_entrada" Type="Boolean" />
+          <Property Name="fecha_alta" Type="DateTime" Precision="3" />
+          <Property Name="fecha_baja" Type="DateTime" Precision="3" />
+          <Property Name="id_provincia" Type="Int32" Nullable="false" />
+          <Property Name="usuario_baja" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_alta" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Provincia" Relationship="Self.FK__Localidad__id_pr__44FF419A" FromRole="Localidad" ToRole="Provincia" />
+          <NavigationProperty Name="Recorrido" Relationship="Self.FK__Recorrido__id_lo__5165187F" FromRole="Localidad" ToRole="Recorrido" />
+        </EntityType>
+        <EntityType Name="Provincia">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="estado" Type="Boolean" />
+          <Property Name="fecha_alta" Type="DateTime" Precision="3" />
+          <Property Name="fecha_baja" Type="DateTime" Precision="3" />
+          <Property Name="usuario_baja" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_alta" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Localidad" Relationship="Self.FK__Localidad__id_pr__44FF419A" FromRole="Provincia" ToRole="Localidad" />
+        </EntityType>
+        <EntityType Name="Recorrido">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estado" Type="Boolean" />
+          <Property Name="fecha_alta" Type="DateTime" Precision="3" />
+          <Property Name="fecha_baja" Type="DateTime" Precision="3" />
+          <Property Name="id_localidad" Type="Int32" Nullable="false" />
+          <Property Name="id_empresa" Type="Int32" Nullable="false" />
+          <Property Name="id_horario" Type="Int32" Nullable="false" />
+          <Property Name="usuario_baja" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_alta" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK__Recorrido__id_em__52593CB8" FromRole="Recorrido" ToRole="Empresa" />
+          <NavigationProperty Name="Horario" Relationship="Self.FK__Recorrido__id_ho__534D60F1" FromRole="Recorrido" ToRole="Horario" />
+          <NavigationProperty Name="Localidad" Relationship="Self.FK__Recorrido__id_lo__5165187F" FromRole="Recorrido" ToRole="Localidad" />
+        </EntityType>
+        <Association Name="FK__Recorrido__id_em__52593CB8">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Recorrido" Type="Self.Recorrido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Recorrido">
+              <PropertyRef Name="id_empresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Recorrido__id_ho__534D60F1">
+          <End Role="Horario" Type="Self.Horario" Multiplicity="1" />
+          <End Role="Recorrido" Type="Self.Recorrido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Horario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Recorrido">
+              <PropertyRef Name="id_horario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Localidad__id_pr__44FF419A">
+          <End Role="Provincia" Type="Self.Provincia" Multiplicity="1" />
+          <End Role="Localidad" Type="Self.Localidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provincia">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Localidad">
+              <PropertyRef Name="id_provincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Recorrido__id_lo__5165187F">
+          <End Role="Localidad" Type="Self.Localidad" Multiplicity="1" />
+          <End Role="Recorrido" Type="Self.Recorrido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Localidad">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Recorrido">
+              <PropertyRef Name="id_localidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
+          <EntitySet Name="Empresa" EntityType="Self.Empresa" />
+          <EntitySet Name="Horario" EntityType="Self.Horario" />
+          <EntitySet Name="Localidad" EntityType="Self.Localidad" />
+          <EntitySet Name="Provincia" EntityType="Self.Provincia" />
+          <EntitySet Name="Recorrido" EntityType="Self.Recorrido" />
+          <AssociationSet Name="FK__Recorrido__id_em__52593CB8" Association="Self.FK__Recorrido__id_em__52593CB8">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Recorrido" EntitySet="Recorrido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Recorrido__id_ho__534D60F1" Association="Self.FK__Recorrido__id_ho__534D60F1">
+            <End Role="Horario" EntitySet="Horario" />
+            <End Role="Recorrido" EntitySet="Recorrido" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Localidad__id_pr__44FF419A" Association="Self.FK__Localidad__id_pr__44FF419A">
+            <End Role="Provincia" EntitySet="Provincia" />
+            <End Role="Localidad" EntitySet="Localidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Recorrido__id_lo__5165187F" Association="Self.FK__Recorrido__id_lo__5165187F">
+            <End Role="Localidad" EntitySet="Localidad" />
+            <End Role="Recorrido" EntitySet="Recorrido" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TerminalDataModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="TerminalDataModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empresa">
+            <EntityTypeMapping TypeName="TerminalDataModel.Empresa">
+              <MappingFragment StoreEntitySet="Empresa">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="razon_social" ColumnName="razon_social" />
+                <ScalarProperty Name="cuit" ColumnName="cuit" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fecha_alta" ColumnName="fecha_alta" />
+                <ScalarProperty Name="fecha_baja" ColumnName="fecha_baja" />
+                <ScalarProperty Name="usuario_baja" ColumnName="usuario_baja" />
+                <ScalarProperty Name="usuario_alta" ColumnName="usuario_alta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Horario">
+            <EntityTypeMapping TypeName="TerminalDataModel.Horario">
+              <MappingFragment StoreEntitySet="Horario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="salida" ColumnName="salida" />
+                <ScalarProperty Name="llegada" ColumnName="llegada" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fecha_alta" ColumnName="fecha_alta" />
+                <ScalarProperty Name="fecha_baja" ColumnName="fecha_baja" />
+                <ScalarProperty Name="usuario_baja" ColumnName="usuario_baja" />
+                <ScalarProperty Name="usuario_alta" ColumnName="usuario_alta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Localidad">
+            <EntityTypeMapping TypeName="TerminalDataModel.Localidad">
+              <MappingFragment StoreEntitySet="Localidad">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="con_entrada" ColumnName="con_entrada" />
+                <ScalarProperty Name="fecha_alta" ColumnName="fecha_alta" />
+                <ScalarProperty Name="fecha_baja" ColumnName="fecha_baja" />
+                <ScalarProperty Name="id_provincia" ColumnName="id_provincia" />
+                <ScalarProperty Name="usuario_baja" ColumnName="usuario_baja" />
+                <ScalarProperty Name="usuario_alta" ColumnName="usuario_alta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provincia">
+            <EntityTypeMapping TypeName="TerminalDataModel.Provincia">
+              <MappingFragment StoreEntitySet="Provincia">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fecha_alta" ColumnName="fecha_alta" />
+                <ScalarProperty Name="fecha_baja" ColumnName="fecha_baja" />
+                <ScalarProperty Name="usuario_baja" ColumnName="usuario_baja" />
+                <ScalarProperty Name="usuario_alta" ColumnName="usuario_alta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recorrido">
+            <EntityTypeMapping TypeName="TerminalDataModel.Recorrido">
+              <MappingFragment StoreEntitySet="Recorrido">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fecha_alta" ColumnName="fecha_alta" />
+                <ScalarProperty Name="fecha_baja" ColumnName="fecha_baja" />
+                <ScalarProperty Name="id_localidad" ColumnName="id_localidad" />
+                <ScalarProperty Name="id_empresa" ColumnName="id_empresa" />
+                <ScalarProperty Name="id_horario" ColumnName="id_horario" />
+                <ScalarProperty Name="usuario_baja" ColumnName="usuario_baja" />
+                <ScalarProperty Name="usuario_alta" ColumnName="usuario_alta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
