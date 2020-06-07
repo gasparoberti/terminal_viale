@@ -35,9 +35,9 @@
 
         <div class="form-group">
             <div class="col-md-10">
-                @Model.usuario_alta = User.Identity.Name;
-                @*@Html.EditorFor(model => User.Identity.Name, new { htmlAttributes = new { @class = "form-control" } })*@
-                @*@Html.ValidationMessageFor(model => model.usuario_alta, "", new { @class = "text-danger" })*@
+                @*@Model.usuario_alta = User.Identity.Name;*@
+                @Html.EditorFor(model => User.Identity.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.usuario_alta, "", new { @class = "text-danger" })
             </div>
         </div>
 
